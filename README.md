@@ -29,23 +29,45 @@ export PS1="\[\033[01;32m\]\u@\h:\w\n\[\033[00m\]\$ "
 ### Install the required packages
 
 ```bash
-$ pip install -r requirements.txt
+$ pip install -r src/requirements.txt
 ```
 
 ### Setup the environment variables
 
 ```bash
-$ cp .env.example .env
+$ cp src/.env.example src/.env
 ```
 
-Set your environment variables in the `.env` file. Like `OPENAI_API_KEY` value.
+Set the values in `src/.env`. The upload settings control the allowed MIME types, maximum file size, and read chunk size.
 
 ## Run the FASTAPI Server 
 
 ```bash 
+$ cd src
 $ uvicorn main:app --reload --host 0.0.0.0 --port 5000
 ```
 
+Run the server from `src` so it can load `src/.env` and the local modules.
+
+## API Endpoints
+
+### Welcome
+
+```http
+GET http://127.0.0.1:5000/api/v1/
+```
+
+### Upload a file
+
+Send a multipart form request with the file field named `file`:
+
+```bash
+curl -X POST "http://127.0.0.1:5000/api/v1/data/upload/1" \
+  -F "file=@path/to/document.pdf"
+```
+
+The upload endpoint accepts the MIME types listed in `FILE_ALLOWED_TYPES` and files up to `FILE_MAX_SIZE` MB. It saves accepted files under `src/assets/files/<project_id>/` with a generated filename. This endpoint validates and stores files; document parsing and indexing are not implemented yet.
+
 ## POSTMAN Collection 
 
-[Download the POSTMAN collection](assets/Mini-Rag-App.postman_collection.json)
+[Download the POSTMAN collection](src/assets/Mini-Rag-App.postman_collection.json)
