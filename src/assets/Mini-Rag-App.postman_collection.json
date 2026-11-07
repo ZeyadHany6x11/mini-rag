@@ -14,19 +14,41 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "{{api}}/api/v1/"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Upload File",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": ""
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{api}}/api/v1/data/upload/{{project_id}}"
         }
       },
       "response": []
     }
   ],
-  "auth": {
-    "type": "apikey"
-  },
   "variable": [
     {
       "key": "api",
-      "value": ""
+      "value": "http://127.0.0.1:5000"
+    },
+    {
+      "key": "project_id",
+      "value": "1"
     }
   ]
 }
